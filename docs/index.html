@@ -19,25 +19,26 @@
         <div><p><b>Paper:</b> <a href="https://arxiv.org">SANE-TTS: Stable And Natural End-to-End Multilingual Text-to-Speech</a></p></div>
         <div><p><b>Authors:</b> Hyunjae Cho, Wonbin Jung, Junhyeok Lee, Sang Hoon Woo @<a href="https://maum.ai">MINDsLab Inc.</a></p></div>
         <div><p><b>Abstract</b>: In this paper, we present SANE-TTS, a stable and natural end-to-end multilingual TTS model.
-            We introduce two significant modifications to VITS for multilingual TTS. 
-            First, we apply domain adversarial training on text encoder to remove speaker information from text representation.
-            Second, we add the regularization loss term to disentangle speaker representation from language.
-            With regularization loss, the model is able to predict natural duration of unseen language for the speaker.
-            In addition to these contributions, we replace the stochastic duration predictor with a deterministic duration predictor, which improves stability of speech synthesis.
-            In MOS evaluation, SANE-TTS achieves naturalness score above 3.80 both in intralingual and cross-lingual synthesis, where the ground truth score is 3.99.
-            Also, SANE-TTS maintains adequate speaker similarity even under cross-lingual settings.</p></div>
+		By the difficulty of obtaining multilingual corpus for given speaker, training multilingual TTS model with monolingual corpora is unavoidable.
+		We introduce speaker regularization loss that improves speech naturalness during cross-lingual synthesis as well as domain adversarial training, which is applied in other multilingual TTS models.
+		Furthermore, by adding speaker regularization loss, replacing speaker embedding with zero vector in duration predictor stabilizes cross-lingual inference.
+		With this replacement, our model generates speeches with moderate rhythm regardless of source speaker in cross-lingual synthesis.
+		In MOS evaluation, SANE-TTS achieves naturalness score above 3.80 both in cross-lingual and intralingual synthesis, where the ground truth score is 3.99.
+		Also, SANE-TTS maintains speaker similarity close to that of ground truth even in cross-lingual inference.
+		Audio samples are available on our web page.</p></div>
 		<div><p><b>GitHub repository:</b> <a href="https://github.com/mindslab-ai/sane-tts">mindslab-ai/sane-tts</a>
 			<iframe src="https://ghbtns.com/github-btn.html?user=mindslab-ai&repo=sane-tts&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>
 		</p></div>
         <p>We use 203.4 hours of internal and external speech corpora in four languages. The external datasets include LJ Speech, LibriTTS, KSS, AISHELL-3 and JVS dataset.</p>
+        
 		<h3>Contents</h3>
 		<div style="border:1px solid; padding:10px; width:250px; background-color:#E2E2E2;">
 			<a href="#synthesis">Multilingual Speech Synthesis</a>
+			<a href="#comparison">Comparison with Another Model</a><br>
 			<a href="#ablation_study">Ablation Study</a><br>
-			<a href="#comparison">Comparison with Other Models</a><br>
             <!-- <a href="#citation">Citation</a><br> -->
 		</div>
-		
+		<br>
 		<h3><a name="synthesis">Multilingual Speech Synthesis</a></h3>
 		
         <table>
@@ -51,7 +52,7 @@
             </colgroup>
             <thead>
                 <tr>
-					<th>Speaker<br>(Source language)</th>
+					<th>Speaker</th>
                     <td><div align="center"><p style="color:grey;"><i>Reference Speech</i></p></div></td>
                     <td><div align="center"><p style="color:grey;">English Target: <br><i>I saw him come from your window, <br>and I saw all that passed between <br>you in the balcony.</i></p></div></td>
                     <td><div align="center"><p style="color:grey;">Korean Target (Romanization): <br><i>언젠가 들은 적이 있는 것 같거든요.<br>(Eonjenga deul-eun jeog-i <br>itneun gut gatgeodeun-yo.)</i></p></div></td>
@@ -61,7 +62,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td nowrap>LJ<br>(English)</td>
+                    <td nowrap>LJ<br>(from English dataset)</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/gt_1.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/en_1.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/ko_1.wav" type="audio/wav"></audio></div></td>
@@ -69,7 +70,7 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/zh_1.wav" type="audio/wav"></audio></div></td>
                 </tr>
                 <tr>
-                    <td nowrap>LibriTTS4356<br>(English)</td>
+                    <td nowrap>LibriTTS4356<br>(from English dataset)</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/gt_2.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/en_2.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/ko_2.wav" type="audio/wav"></audio></div></td>
@@ -77,7 +78,7 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/zh_2.wav" type="audio/wav"></audio></div></td>
                 </tr>
                 <tr>
-                    <td nowrap>kss<br>(Korean)</td>
+                    <td nowrap>KSS<br>(from Korean dataset)</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/gt_3.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/en_3.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/ko_3.wav" type="audio/wav"></audio></div></td>
@@ -85,7 +86,7 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/zh_3.wav" type="audio/wav"></audio></div></td>
                 </tr>
                 <tr>
-                    <td nowrap>jvs001<br>(Japanese)</td>
+                    <td nowrap>jvs001<br>(from Japanese dataset)</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/gt_4.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/en_4.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/ko_4.wav" type="audio/wav"></audio></div></td>
@@ -93,7 +94,7 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/zh_4.wav" type="audio/wav"></audio></div></td>
                 </tr>
                 <tr>
-                    <td nowrap>SSB0073<br>(Chinese)</td>
+                    <td nowrap>SSB0073<br>(from Chinese dataset)</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/gt_5.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/en_5.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/synthesis/ko_5.wav" type="audio/wav"></audio></div></td>
@@ -103,6 +104,52 @@
             </tbody>
         </table>
         <br>
+		
+		<h3><a name="comparison">Comparison with Another Model</a></h3>
+		<p style="color:grey;">Text: <i>She saw him displace the bar and slip into the garden.</i></p>
+        <table>
+			<colgroup>
+                <col width="28%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+            </colgroup>
+            <thead>
+                <tr>
+					<th>Model</th>
+                    <td><div align="center">English<br>(LibriTTS4356)</div></td>
+                    <td><div align="center">Korean<br>(KSS)</div></td>
+                    <td><div align="center">Japanese<br>(jvs001)</div></td>
+                    <td><div align="center">Chinese<br>(SSB0073)</div></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td nowrap>Ground Truth</td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_en.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_ko.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_ja.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_zh.wav" type="audio/wav"></audio></div></td>
+                </tr>
+                <tr>
+                    <td nowrap><a href="https://arxiv.org/abs/2008.00768">Meta-Learning Model</a></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_en.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_ko.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_ja.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_zh.wav" type="audio/wav"></audio></div></td>
+                </tr>
+                <tr>
+                    <td nowrap><b>SANE-TTS</b></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_en.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_ko.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_ja.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_zh.wav" type="audio/wav"></audio></div></td>
+                </tr>
+            </tbody>
+        </table>
+		<p>Header of each column with audio samples is a language of a speaker's utterances in the dataset.</p>
+		<br>
 		
         <h3><a name="ablation_study">Ablation Study</a></h3>
 		<p style="color:grey;">Text: <i>When she was left by herself the poor girl began to feel afraid.</i></p>
@@ -116,9 +163,9 @@
             </colgroup>
             <thead>
                 <tr>
-					<th>Source language<br>(Speaker)</th>
+					<th>Model</th>
                     <td><div align="center">English<br>(LibriTTS4356)</div></td>
-                    <td><div align="center">Korean<br>(kss)</div></td>
+                    <td><div align="center">Korean<br>(KSS)</div></td>
                     <td><div align="center">Japanese<br>(jvs001)</div></td>
                     <td><div align="center">Chinese<br>(SSB0073)</div></td>
                 </tr>
@@ -132,7 +179,7 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/gt_zh.wav" type="audio/wav"></audio></div></td>
                 </tr>
                 <tr>
-                    <td nowrap>MAUM-TTS Baseline</td>
+                    <td nowrap>SANE-TTS</td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/base_en.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/base_ko.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/base_ja.wav" type="audio/wav"></audio></div></td>
@@ -161,50 +208,6 @@
                 </tr>
             </tbody>
         </table>
-        <br>
-        
-        <h3><a name="comparison">Comparison with Other Models</a></h3>
-		<p style="color:grey;">Text: <i>She saw him displace the bar and slip into the garden.</i></p>
-        <table>
-			<colgroup>
-                <col width="28%">
-                <col width="18%">
-                <col width="18%">
-                <col width="18%">
-                <col width="18%">
-            </colgroup>
-            <thead>
-                <tr>
-					<th>Source language<br>(Speaker)</th>
-                    <td><div align="center">English<br>(LibriTTS4356)</div></td>
-                    <td><div align="center">Korean<br>(kss)</div></td>
-                    <td><div align="center">Japanese<br>(jvs001)</div></td>
-                    <td><div align="center">Chinese<br>(SSB0073)</div></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td nowrap>Ground Truth</td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_en.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_ko.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_ja.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/gt_zh.wav" type="audio/wav"></audio></div></td>
-                </tr>
-                <tr>
-                    <td nowrap><a href="https://arxiv.org/abs/2008.00768">Meta-Learning Model</a></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_en.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_ko.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_ja.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/meta_zh.wav" type="audio/wav"></audio></div></td>
-                </tr>
-                <tr>
-                    <td nowrap><b>MAUM-TTS</b></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_en.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_ko.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_ja.wav" type="audio/wav"></audio></div></td>
-                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/comparison/base_zh.wav" type="audio/wav"></audio></div></td>
-                </tr>
-            </tbody>
-        </table>
+		<p>Header of each column with audio samples is a language of a speaker's utterances in the dataset.</p>
     </body>
 </html>
