@@ -25,6 +25,8 @@
 			<a href="#synthesis">Multilingual Speech Synthesis</a>
 			<a href="#comparison">Comparison with Another Model</a><br>
 			<a href="#ablation_study">Ablation Study</a><br>
+            <a href="#Long Text">Long Text</a><br>
+            <a href="#Code Switching">Code Switching</a><br>
             <!-- <a href="#citation">Citation</a><br> -->
 		</div>
 		<br>
@@ -194,6 +196,68 @@
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/sdp_ko.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/sdp_ja.wav" type="audio/wav"></audio></div></td>
                     <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/ablation_study/sdp_zh.wav" type="audio/wav"></audio></div></td>
+                </tr>
+            </tbody>
+        </table>
+		<p>Header of each column with audio samples is a language of a speaker's utterances in the dataset.</p>
+        <br>
+        <h3><a name="Long Text">Long Text</a></h3>
+		<p style="color:grey;">Text: <i>The gentleman in the plush shorts and cottons considering it no part of his duty to show the people from the office out, consistently declined to answer the bell, and they showed themselves out. 'Stop at the house with a green door, driver,' said the heavy gentleman. The door swung heavily after them, and they descended a small flight of steps. The young man disappeared into a private office with the stones, and Tom waited. As he entered it he saw a man looking over the wonderful craft. "But, up to the time I met you on Earthquake Island, I could form no plan for discovering Phantom Mountain, and learning the secret of the diamond makers," went on mr Jenks.</i></p>
+        <table>
+			<colgroup>
+                <col width="28%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+            </colgroup>
+            <thead>
+                <tr>
+					<th>Model</th>
+                    <td><div align="center">English<br>(LibriTTS4356)</div></td>
+                    <td><div align="center">Korean<br>(KSS)</div></td>
+                    <td><div align="center">Japanese<br>(jvs001)</div></td>
+                    <td><div align="center">Chinese<br>(SSB0073)</div></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td nowrap>Ground Truth</td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/longtext/long_en.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/longtext/long_ko.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/longtext/long_ja.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/longtext/long_zh.wav" type="audio/wav"></audio></div></td>
+                </tr>
+            </tbody>
+        </table>
+		<p>Header of each column with audio samples is a language of a speaker's utterances in the dataset.</p>
+        <br>
+        <h3><a name="Code Switching">Code Switching</a></h3>
+		<p style="color:grey;">Text: <i>東京에 가서 麻辣烫 먹고싶다. Let's go.</i></p>
+        <table>
+			<colgroup>
+                <col width="28%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+                <col width="18%">
+            </colgroup>
+            <thead>
+                <tr>
+					<th>Model</th>
+                    <td><div align="center">English<br>(LibriTTS4356)</div></td>
+                    <td><div align="center">Korean<br>(KSS)</div></td>
+                    <td><div align="center">Japanese<br>(jvs001)</div></td>
+                    <td><div align="center">Chinese<br>(SSB0073)</div></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td nowrap>Ground Truth</td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/codeswitch/en.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/codeswitch/ko.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/codeswitch/ja.wav" type="audio/wav"></audio></div></td>
+                    <td><div align="center"><audio controls="" style="width: 250px;"><source src="samples/codeswitch/zh.wav" type="audio/wav"></audio></div></td>
                 </tr>
             </tbody>
         </table>
